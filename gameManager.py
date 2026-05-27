@@ -25,7 +25,6 @@ class GameManager:
         for i in range(total_salas - 1):
             tipo = random.choice(["combate", "combate", "tesouro", "descanso"])
             salas.append(Room(i + 1, tipo))
-        # Última sala é sempre o boss
         salas.append(Room(total_salas, "boss"))
         return salas
     
@@ -68,7 +67,6 @@ class GameManager:
                 break
             input("\n[Enter para continuar...]")
 
-        # Exibe histórico da run
         print("\n--- Histórico da Run ---")
         for evento in self.heroi.historico[-10:]:
             print(f"  • {evento}")

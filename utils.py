@@ -44,8 +44,8 @@ def batalha(heroi, inimigo):
     if heroi.esta_vivo():
         geo = inimigo.drop_recompensa()
         heroi.coletar_geo(geo)
-        print(f"\n✓ Vitória! +{geo} Geo")
+        print(f"\nVitória! +{geo} Geo")
         return "vitoria"
     else:
-        print(f"\n✗ Você foi derrotado...")
+        print(f"\nVocê foi derrotado...")
         return "derrota"

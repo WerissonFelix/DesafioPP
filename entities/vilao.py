@@ -13,10 +13,6 @@ class Vilao(Personagem):
         
     def atacar(self, heroi):
         return heroi.receber_dano(self.ataque)
-    
-    def habilidade_especial(self, heroi):
-        """Override nas subclasses para comportamentos únicos"""
-        pass
 
     def drop_recompensa(self):
         geo = random.randint(*self.recompensa_geo)
@@ -25,7 +21,6 @@ class Vilao(Personagem):
 
     def __str__(self):
         return f'Vilão: {self.nome}, Idade: {self.idade}, Vida: {self.vida}, Maldade: {self.maldade}'
-
 
 class BossVilao(Vilao):
     def __init__(self, nome, vida, ataque, defesa, fases_hp, falas):
