@@ -1,41 +1,46 @@
+import pygame
+
 class Personagem:
-    """
-    A classe Personagem representa um personagem genérico em um jogo.
-    """
-    def __init__(self, nome, vida, ataque, defesa):
+    def __init__(self, nome, vida, ataque, defesa, x, y, largura, altura, cor):
         self.nome = nome
-        self.vida = vida
         self.vida_max = vida
+        self.vida = vida
         self.ataque = ataque
         self.defesa = defesa
-        self.historico = []
-
-    def curar(self, incremento=10):
-        """
-        Aumenta a vida do personagem. O valor padrão de incremento é 10.
-        """
-        self.vida += incremento
-        print(f'Vida de {self.nome} após upgrade: {self.vida}')
+        self.x = x
+        self.y = y
+        self.largura = largura
+        self.altura = altura
+        self.cor = cor
+        self.velocidade = 5  
 
     def receber_dano(self, dano):
+        dano_real = max(0, dano - self.defesa)
+        self.vida -= dano_real
+        if self.vida < 0:
+            self.vida = 0
+        return dano_real
 
-        dano_final = max(1, dano - self.defesa)
-
-        self.vida -= dano_final
-
-        return dano_final
-
-    def update_nome(self, nome_editado):
-        """
-        Atualiza o nome do personagem.
-        """
-        self.nome = nome_editado
-    
     def esta_vivo(self):
         return self.vida > 0
 
-    def dialogar(self, mensagem):
-        print(f"\n[{self.nome}]: \"{mensagem}\"")
+    def desenhar(self, tela):
+        pygame.draw.rect(tela, self.cor, (self.x, self.y, self.largura, self.altura))
+        # Barra de vida
+        if self.vida < self.vida_max:
+            barra_larg = self.largura
+            barra_alt = 6
+            vida_porc = self.vida / self.vida_max
+            pygame.draw.rect(tela, (255,0,0), (self.x, self.y-10, barra_larg, barra_alt))
+            pygame.draw.rect(tela, (0,255,0), (self.x, self.y-10, barra_larg * vida_porc, barra_alt))
     
-    def __str__(self):
-        return f'Personagem: {self.nome}, Idade: {self.idade}, Vida: {self.vida}'
+    def aplicar_limites(self, largura_tela, altura_tela):
+        if self.x < 0:
+            self.x = 0
+        elif self.x + self.largura > largura_tela:
+            self.x = largura_tela - self.largura
+
+        if self.y < 0:
+            self.y = 0
+        elif self.y + self.altura > altura_tela:
+            self.y = altura_tela - self.altura
